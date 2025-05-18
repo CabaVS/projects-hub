@@ -1,0 +1,31 @@
+<Solution>
+  <Folder Name="/.solution/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/infrastructure/" />
+  <Folder Name="/infrastructure/scripts/">
+    <File Path="infrastructure\scripts\pre-deployment.ps1" />
+  </Folder>
+  <Folder Name="/infrastructure/terraform/">
+    <File Path="infrastructure\terraform\main.tf" />
+    <File Path="infrastructure\terraform\backend.tfvars" />
+    <File Path="infrastructure\terraform\terraform.tfvars" />
+  </Folder>
+  <Folder Name="/infrastructure/terraform/project-expensetracker/">
+    <File Path="infrastructure\terraform\project-expensetracker\main.tf" />
+    <File Path="infrastructure\terraform\project-expensetracker\outputs.tf" />
+    <File Path="infrastructure\terraform\project-expensetracker\variables.tf" />
+  </Folder>
+  <Folder Name="/infrastructure/terraform/shared/">
+    <File Path="infrastructure\terraform\shared\main.tf" />
+    <File Path="infrastructure\terraform\shared\outputs.tf" />
+    <File Path="infrastructure\terraform\shared\variables.tf" />
+  </Folder>
+  <Folder Name="/proj-expensetracker/" />
+  <Folder Name="/proj-expensetracker/src/" />
+  <Folder Name="/proj-expensetracker/tests/" />
+</Solution>

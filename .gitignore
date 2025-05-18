@@ -1,0 +1,19 @@
+# .NET
+bin/
+obj/
+
+# Docker
+.env
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+
+# Rider IDE
+.idea/
+*.DotSettings.user
+
+# Visual Studio IDE
+.vs/
+.vscode/
