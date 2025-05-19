@@ -40,7 +40,9 @@ jobs:
           
       - name: Create backend.tfvars from secret
         run: |
-          echo "${{ secrets.TF_BACKEND_CONFIG }}" > backend.tfvars
+          cat <<EOF > backend.tfvars
+            ${{ secrets.TF_BACKEND_CONFIG }}
+          EOF
         working-directory: infrastructure
           
       - name: Terraform Init
@@ -57,7 +59,9 @@ jobs:
         
       - name: Create terraform.tfvars from secret
         run: |
-          echo "${{ secrets.TF_VARS_CONFIG }}" > terraform.tfvars
+          cat <<EOF > terraform.tfvars
+            ${{ secrets.TF_VARS_CONFIG }}
+          EOF
         working-directory: infrastructure
         
       - name: Terraform Plan
@@ -114,7 +118,9 @@ jobs:
           
       - name: Create backend.tfvars from secret
         run: |
-          echo "${{ secrets.TF_BACKEND_CONFIG }}" > backend.tfvars
+          cat <<EOF > backend.tfvars
+            ${{ secrets.TF_BACKEND_CONFIG }}
+          EOF
         working-directory: infrastructure
 
       - name: Terraform Init
@@ -123,7 +129,9 @@ jobs:
         
       - name: Create terraform.tfvars from secret
         run: |
-          echo "${{ secrets.TF_VARS_CONFIG }}" > terraform.tfvars
+          cat <<EOF > terraform.tfvars
+            ${{ secrets.TF_VARS_CONFIG }}
+          EOF
         working-directory: infrastructure
 
       - name: Terraform Apply
