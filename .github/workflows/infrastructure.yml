@@ -41,44 +41,44 @@ jobs:
       - name: Create backend.tfvars from secret
         run: |
           echo "${{ secrets.TF_BACKEND_CONFIG }}" | base64 --decode > backend.tfvars
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
           
       - name: Terraform Init
         run: terraform init -backend-config="backend.tfvars"
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
         
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
         
       - name: Create terraform.tfvars from secret
         run: |
           echo "${{ secrets.TF_VARS_CONFIG }}" | base64 --decode > terraform.tfvars
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
         
       - name: Terraform Plan
         run: terraform plan -input=false -no-color -var-file="terraform.tfvars" -out=tfplan
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
         
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
         with:
           name: terraform-plan
-          path: infrastructure/tfplan
+          path: infrastructure/terraform/tfplan
           
       - name: Show Terraform Plan as JSON
         run: terraform show -json tfplan > tfplan.json
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
           
       - name: Upload Plan Artifact (JSON)
         uses: actions/upload-artifact@v4
         with:
           name: terraform-plan-json
-          path: infrastructure/tfplan.json
+          path: infrastructure/terraform/tfplan.json
         
   terraform-apply:
     name: Terraform Apply
@@ -98,7 +98,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: terraform-plan
-          path: infrastructure
+          path: infrastructure/terraform
 
       - name: Azure Login with OIDC
         uses: azure/login@v2
@@ -115,17 +115,17 @@ jobs:
       - name: Create backend.tfvars from secret
         run: |
           echo "${{ secrets.TF_BACKEND_CONFIG }}" | base64 --decode > backend.tfvars
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
 
       - name: Terraform Init
         run: terraform init -backend-config="backend.tfvars"
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
         
       - name: Create terraform.tfvars from secret
         run: |
           echo "${{ secrets.TF_VARS_CONFIG }}" | base64 --decode > terraform.tfvars
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform
 
       - name: Terraform Apply
         run: terraform apply -input=false -no-color -var-file="terraform.tfvars" tfplan
-        working-directory: infrastructure
+        working-directory: infrastructure/terraform

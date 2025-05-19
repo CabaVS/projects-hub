@@ -44,11 +44,11 @@ data "azurerm_storage_account" "existing" {
 module "shared" {
   source = "./shared"
 
-  resource_group_name           = var.resource_group_name
-  location                      = data.azurerm_resource_group.existing.location
-  sql_admin_group_display_name  = var.sql_admin_group_display_name
-  sql_admin_group_object_id     = var.sql_admin_group_object_id
-  sql_admin_group_tenant_id     = var.sql_admin_group_tenant_id
+  resource_group_name          = var.resource_group_name
+  location                     = data.azurerm_resource_group.existing.location
+  sql_admin_group_display_name = var.sql_admin_group_display_name
+  sql_admin_group_object_id    = var.sql_admin_group_object_id
+  sql_admin_group_tenant_id    = var.sql_admin_group_tenant_id
 }
 
 # Modules: Project for Expense Tracker
