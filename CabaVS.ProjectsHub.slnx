@@ -12,6 +12,8 @@
   <Folder Name="/infrastructure/" />
   <Folder Name="/infrastructure/scripts/">
     <File Path="infrastructure\scripts\pre-deployment.ps1" />
+    <File Path="infrastructure\scripts\post-deployment-github-oidc.ps1" />
+    <File Path="infrastructure\scripts\post-deployment-tfvars-to-base64.ps1" />
   </Folder>
   <Folder Name="/infrastructure/terraform/">
     <File Path="infrastructure\terraform\main.tf" />

@@ -4,8 +4,8 @@ on:
   push:
     branches: [ "master" ]
     paths:
-      - 'infrastructure/**'
       - '.github/workflows/infrastructure.yml'
+      - 'infrastructure/terraform/**'
   workflow_dispatch:
 
 env:
