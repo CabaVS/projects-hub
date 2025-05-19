@@ -57,7 +57,7 @@ jobs:
         
       - name: Create terraform.tfvars from secret
         run: |
-          echo "${{ secrets.TF_VARS_CONFIG }}" > infrastructure/terraform.tfvars
+          echo "${{ secrets.TF_VARS_CONFIG }}" > terraform.tfvars
         working-directory: infrastructure
         
       - name: Terraform Plan
@@ -123,7 +123,7 @@ jobs:
         
       - name: Create terraform.tfvars from secret
         run: |
-          echo "${{ secrets.TF_VARS_CONFIG }}" > infrastructure/terraform.tfvars
+          echo "${{ secrets.TF_VARS_CONFIG }}" > terraform.tfvars
         working-directory: infrastructure
 
       - name: Terraform Apply
