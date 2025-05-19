@@ -6,6 +6,9 @@
     <File Path="Directory.Packages.props" />
     <File Path="global.json" />
   </Folder>
+  <Folder Name="/.solution/GitHub Actions/">
+    <File Path=".github\workflows\infrastructure.yml" />
+  </Folder>
   <Folder Name="/infrastructure/" />
   <Folder Name="/infrastructure/scripts/">
     <File Path="infrastructure\scripts\pre-deployment.ps1" />
