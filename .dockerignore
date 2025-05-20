@@ -1,0 +1,11 @@
+bin/
+obj/
+.vscode/
+.git/
+.github/
+*.md
+*.user
+*.suo
+*.log
+*.ps1
+*.zip
