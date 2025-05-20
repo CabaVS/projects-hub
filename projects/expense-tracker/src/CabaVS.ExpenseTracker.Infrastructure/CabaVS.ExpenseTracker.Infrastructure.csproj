@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    
+    <ItemGroup>
+        <ProjectReference Include="..\CabaVS.ExpenseTracker.Application\CabaVS.ExpenseTracker.Application.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Azure.Identity" />
+      <PackageReference Include="Azure.Storage.Blobs" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    </ItemGroup>
+    
+</Project>

@@ -9,6 +9,10 @@
   <Folder Name="/.solution/GitHub Actions/">
     <File Path=".github\workflows\infrastructure.yml" />
   </Folder>
+  <Folder Name="/aspire/">
+    <Project Path="aspire\CabaVS.ExpenseTracker.AppHost\CabaVS.ExpenseTracker.AppHost.csproj" Type="Classic C#" />
+    <Project Path="aspire\CabaVS.ExpenseTracker.ServiceDefaults\CabaVS.ExpenseTracker.ServiceDefaults.csproj" Type="Classic C#" />
+  </Folder>
   <Folder Name="/infrastructure/" />
   <Folder Name="/infrastructure/scripts/">
     <File Path="infrastructure\scripts\pre-deployment.ps1" />
@@ -31,6 +35,13 @@
     <File Path="infrastructure\terraform\shared\variables.tf" />
   </Folder>
   <Folder Name="/proj-expensetracker/" />
-  <Folder Name="/proj-expensetracker/src/" />
+  <Folder Name="/proj-expensetracker/src/">
+    <Project Path="projects\expense-tracker\src\CabaVS.ExpenseTracker.API\CabaVS.ExpenseTracker.API.csproj" Type="Classic C#" />
+    <Project Path="projects\expense-tracker\src\CabaVS.ExpenseTracker.Application\CabaVS.ExpenseTracker.Application.csproj" Type="Classic C#" />
+    <Project Path="projects\expense-tracker\src\CabaVS.ExpenseTracker.Domain\CabaVS.ExpenseTracker.Domain.csproj" Type="Classic C#" />
+    <Project Path="projects\expense-tracker\src\CabaVS.ExpenseTracker.Infrastructure\CabaVS.ExpenseTracker.Infrastructure.csproj" Type="Classic C#" />
+    <Project Path="projects\expense-tracker\src\CabaVS.ExpenseTracker.Persistence\CabaVS.ExpenseTracker.Persistence.csproj" Type="Classic C#" />
+    <Project Path="projects\expense-tracker\src\CabaVS.ExpenseTracker.Presentation\CabaVS.ExpenseTracker.Presentation.csproj" Type="Classic C#" />
+  </Folder>
   <Folder Name="/proj-expensetracker/tests/" />
 </Solution>

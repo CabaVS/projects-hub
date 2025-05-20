@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <ProjectReference Include="..\CabaVS.ExpenseTracker.Application\CabaVS.ExpenseTracker.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FastEndpoints" />
+      <PackageReference Include="FastEndpoints.Swagger" />
+      <PackageReference Include="Serilog" />
+      <PackageReference Include="Serilog.AspNetCore" />
+      <PackageReference Include="Serilog.Sinks.Console" />
+      <PackageReference Include="Serilog.Sinks.OpenTelemetry" />
+    </ItemGroup>
+
+</Project>
