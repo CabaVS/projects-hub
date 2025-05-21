@@ -7,12 +7,16 @@ on:
       - master
     paths:
       - '.github/workflows/proj-expensetracker.yml'
+      - 'Directory.Build.props'
+      - 'Directory.Packages.props'
+      - 'global.json'
+      - 'proj.expensetrackerapi.Dockerfile'
       - 'projects/expense-tracker/**'
 
 env:
   BUILD_CONFIGURATION: "Release"
   DOCKER_IMAGE_NAME_API: "expensetrackerapi"
-  DOCKERFILE_PATH_API: ".\proj.expensetrackerapi.Dockerfile"
+  DOCKERFILE_PATH_API: "./proj.expensetrackerapi.Dockerfile"
   PATH_TO_CSPROJ_API: "./projects/expense-tracker/src/CabaVS.ExpenseTracker.API/CabaVS.ExpenseTracker.API.csproj"
   PATH_TO_GLOBAL_JSON: "./global.json"
 
