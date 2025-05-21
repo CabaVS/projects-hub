@@ -12,6 +12,7 @@
   </Folder>
   <Folder Name="/.solution/GitHub Actions/">
     <File Path=".github\workflows\infrastructure.yml" />
+    <File Path=".github\workflows\proj-expensetracker.yml" />
   </Folder>
   <Folder Name="/aspire/">
     <Project Path="aspire\CabaVS.ExpenseTracker.AppHost\CabaVS.ExpenseTracker.AppHost.csproj" Type="Classic C#" />

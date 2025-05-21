@@ -1,0 +1,107 @@
+name: Project - Expense Tracker
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/proj-expensetracker.yml'
+      - 'projects/expense-tracker/**'
+
+env:
+  BUILD_CONFIGURATION: "Release"
+  DOCKER_IMAGE_NAME_API: "expensetrackerapi"
+  PATH_TO_CSPROJ_API: "./projects/expense-tracker/src/CabaVS.ExpenseTracker.API/CabaVS.ExpenseTracker.API.csproj"
+  PATH_TO_GLOBAL_JSON: "./global.json"
+
+jobs:
+  build:
+    name: Build API project
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: ${{ env.PATH_TO_GLOBAL_JSON }}
+
+      - name: Restore
+        run: dotnet restore ${{ env.PATH_TO_API }}
+
+      - name: Build
+        run: dotnet build ${{ env.PATH_TO_API }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+  
+  push-image:
+    name: Push image to ACR
+    needs: build
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set image tags
+        id: vars
+        run: |
+          echo "sha_tag=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME_API }}:latest \
+            -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME_API }}:${{ steps.vars.outputs.sha_tag }} .
+
+      - name: Azure Login with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.EXTR_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Docker Login to ACR
+        run: az acr login --name ${{ secrets.ACR_NAME }}
+
+      - name: Push image to ACR
+        run: |
+          docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME_API }}:latest
+          docker push ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME_API }}:${{ steps.vars.outputs.sha_tag }}
+  
+  deploy-to-aca:
+    environment: production
+    name: Deploy to ACA
+    needs: push-image
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.EXTR_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Azure Container Apps
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          registryUrl: ${{ secrets.ACR_NAME }}.azurecr.io
+          containerAppName: ${{ secrets.EXTR_ACA_NAME }}
+          resourceGroup: ${{ secrets.RG_NAME }}
+          imageToDeploy: ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME_API }}:latest
+          environmentVariables: >
+            ASPNETCORE_ENVIRONMENT=${{ secrets.ASPNETCORE_ENVIRONMENT }}
+            AZURE_CLIENT_ID=${{ secrets.EXTR_UAMI_CLIENT_ID }}
+            CVS_CONFIGURATION_FROM_AZURE=${{ secrets.CVS_CONFIGURATION_FROM_AZURE }}
+            CVS_CONFIGURATION_FROM_AZURE_URL=${{ secrets.EXTR_CVS_CONFIGURATION_FROM_AZURE_URL }}
+            CVS_PERSISTENCE_AUTH_ENTRA_ID=${{ secrets.CVS_PERSISTENCE_AUTH_ENTRA_ID }}
+            CVS_USER_ID=${{ secrets.CVS_USER_ID }}
