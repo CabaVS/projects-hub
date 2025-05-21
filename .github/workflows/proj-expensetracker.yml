@@ -35,6 +35,7 @@ jobs:
         run: dotnet build ${{ env.PATH_TO_API }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
   
   push-image:
+    environment: production
     name: Push image to ACR
     needs: build
     runs-on: ubuntu-latest
