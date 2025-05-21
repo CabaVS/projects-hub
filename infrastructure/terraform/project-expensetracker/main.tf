@@ -43,6 +43,11 @@ resource "azurerm_container_app" "aca_expensetrackerapi" {
       image  = "mcr.microsoft.com/dotnet/samples:aspnetapp"
       cpu    = 0.25
       memory = "0.5Gi"
+
+      env {
+        name  = "APPLICATIONINSIGHTS_CONNECTION_STRING"
+        value = var.application_insights_connection_string
+      }
     }
   }
 }

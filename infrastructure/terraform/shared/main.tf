@@ -7,6 +7,17 @@ resource "azurerm_log_analytics_workspace" "law" {
   retention_in_days   = 30
 }
 
+# Application Insights
+resource "azurerm_application_insights" "app_insights" {
+  name                 = "appi-cabavsprojectshub"
+  location             = var.location
+  resource_group_name  = var.resource_group_name
+  application_type     = "web"
+  workspace_id         = azurerm_log_analytics_workspace.law.id
+  sampling_percentage  = 10
+  daily_data_cap_in_gb = 1
+}
+
 # Azure Container Registry
 resource "azurerm_container_registry" "acr" {
   name                = "acrcabavsprojectshub"

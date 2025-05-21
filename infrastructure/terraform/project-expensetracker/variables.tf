@@ -32,3 +32,8 @@ variable "blob_container_scope" {
   type        = string
   description = "Scope path for the blob container (used for RBAC)"
 }
+
+variable "application_insights_connection_string" {
+  type        = string
+  description = "Connection string for the shared Application Insights instance"
+}
