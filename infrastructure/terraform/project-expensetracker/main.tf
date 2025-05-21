@@ -24,6 +24,7 @@ resource "azurerm_container_app" "aca_expensetrackerapi" {
 
   lifecycle {
     ignore_changes = [
+      template[0].container[0].env,
       template[0].container[0].image
     ]
   }
