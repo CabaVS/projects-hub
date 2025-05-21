@@ -12,6 +12,7 @@ on:
 env:
   BUILD_CONFIGURATION: "Release"
   DOCKER_IMAGE_NAME_API: "expensetrackerapi"
+  DOCKERFILE_PATH_API: ".\proj.expensetrackerapi.Dockerfile"
   PATH_TO_CSPROJ_API: "./projects/expense-tracker/src/CabaVS.ExpenseTracker.API/CabaVS.ExpenseTracker.API.csproj"
   PATH_TO_GLOBAL_JSON: "./global.json"
 
@@ -54,7 +55,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME_API }}:latest \
+          docker build -f ${{ env.DOCKERFILE_PATH_API }} \
+            -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME_API }}:latest \
             -t ${{ secrets.ACR_NAME }}.azurecr.io/${{ env.DOCKER_IMAGE_NAME_API }}:${{ steps.vars.outputs.sha_tag }} .
 
       - name: Azure Login with OIDC
