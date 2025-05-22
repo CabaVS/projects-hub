@@ -18,7 +18,7 @@ env:
   DOCKER_IMAGE_NAME_API: "expensetrackerapi"
   DOCKERFILE_PATH_API: "./proj.expensetrackerapi.Dockerfile"
   PATH_TO_CSPROJ_API: "./projects/expense-tracker/src/CabaVS.ExpenseTracker.API/CabaVS.ExpenseTracker.API.csproj"
-  PATH_TO_CSPROJ_PERSISTENCE: "./projects/expense-tracker/src/CabaVS.ExpenseTracker.API/CabaVS.ExpenseTracker.API.csproj"
+  PATH_TO_CSPROJ_PERSISTENCE: "./projects/expense-tracker/src/CabaVS.ExpenseTracker.Persistence/CabaVS.ExpenseTracker.Persistence.csproj"
   PATH_TO_GLOBAL_JSON: "./global.json"
 
 jobs:
@@ -63,7 +63,7 @@ jobs:
           dotnet ef migrations script \
             --idempotent \
             --project ${{ env.PATH_TO_CSPROJ_PERSISTENCE }} \
-            --startup-project ${{ env.PATH_TO_API }} \
+            --startup-project ${{ env.PATH_TO_CSPROJ_API }} \
             --output migration.sql
 
       - name: Upload migration.sql as artifact
