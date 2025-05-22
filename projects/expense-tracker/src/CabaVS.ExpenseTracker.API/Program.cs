@@ -15,7 +15,7 @@ if (loadAzureConfiguration)
 }
 
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(isDevelopment);
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddPresentation(builder.Host, builder.Configuration, isDevelopment);
 
