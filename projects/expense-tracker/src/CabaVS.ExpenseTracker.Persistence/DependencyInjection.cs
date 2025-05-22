@@ -14,12 +14,11 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("SqlDatabase")
-                               ?? throw new InvalidOperationException("Connection string to the database is not configured.");
-        
         services.AddTransient(_ =>
         {
-            var useEntraId = bool.Parse(configuration["CVS_PERSISTENCE_AUTH_ENTRA_ID"] ?? "true");
+            var connectionString = configuration.GetConnectionString("SqlDatabase");
+            
+            var useEntraId = bool.Parse(configuration["CVS_PERSISTENCE_AUTH_ENTRA_ID"] ?? bool.FalseString);
             if (!useEntraId)
             {
                 return new SqlConnection(connectionString);
