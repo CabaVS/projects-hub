@@ -10,7 +10,7 @@ internal sealed class UserIdEnrichmentMiddleware(ICurrentUserAccessor currentUse
     {
         if (currentUserAccessor.TryGetCurrentUser(out UserModel currentUser))
         {
-            using (LogContext.PushProperty("UserId", currentUser.Id))
+            using (LogContext.PushProperty("CVS_AuthenticatedUserId", currentUser.Id))
             {
                 await next(context);
             }

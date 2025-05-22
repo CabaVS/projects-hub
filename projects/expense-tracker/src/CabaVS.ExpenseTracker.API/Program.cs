@@ -14,16 +14,16 @@ if (loadAzureConfiguration)
     builder.Configuration.AddJsonStream(AzureBlobJsonConfigurationProvider.JsonStream());
 }
 
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(isDevelopment);
+builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddPresentation(builder.Host, builder.Configuration, isDevelopment);
+
 // Only for Aspire (DEV only)
 if (isDevelopment)
 {
     builder.AddServiceDefaults();
 }
-
-builder.Services.AddApplication();
-builder.Services.AddInfrastructure(isDevelopment);
-builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddPresentation(builder.Host, builder.Configuration, isDevelopment);
 
 WebApplication app = builder.Build();
 
