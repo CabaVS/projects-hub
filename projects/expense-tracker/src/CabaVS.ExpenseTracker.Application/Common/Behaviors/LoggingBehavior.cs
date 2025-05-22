@@ -16,7 +16,7 @@ internal sealed class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavi
     {
         var requestName = typeof(TRequest).Name;
         
-        logger.LogInformation("Handling {RequestName} with payload: {@Request}.", requestName, request);
+        logger.LogInformation("Handling {CVS_RequestName} with payload: {CVS_RequestPayload}.", requestName, request);
         
         var stopwatch = Stopwatch.StartNew();
         TResponse response = await next(cancellationToken);
@@ -26,20 +26,20 @@ internal sealed class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavi
         {
             case Result { IsSuccess: true }:
                 logger.LogInformation(
-                    "Handled {RequestName} in {ElapsedMilliseconds} ms.", 
+                    "Handled {CVS_RequestName} in {CVS_ElapsedMilliseconds} ms.", 
                     requestName, 
                     stopwatch.ElapsedMilliseconds);
                 break;
             case Result { IsFailure: true } result:
                 logger.LogWarning(
-                    "Failed {RequestName} with {Error} in {ElapsedMilliseconds} ms.",
+                    "Failed {CVS_RequestName} with {CVS_Error} in {CVS_ElapsedMilliseconds} ms.",
                     requestName,
                     result.Error,
                     stopwatch.ElapsedMilliseconds);
                 break;
             default:
                 logger.LogInformation(
-                    "Handled {RequestName} in {ElapsedMilliseconds} ms.",
+                    "Handled {CVS_RequestName} in {CVS_ElapsedMilliseconds} ms.",
                     requestName,
                     stopwatch.ElapsedMilliseconds);
                 break;
