@@ -18,6 +18,7 @@ env:
   DOCKER_IMAGE_NAME_API: "expensetrackerapi"
   DOCKERFILE_PATH_API: "./proj.expensetrackerapi.Dockerfile"
   PATH_TO_CSPROJ_API: "./projects/expense-tracker/src/CabaVS.ExpenseTracker.API/CabaVS.ExpenseTracker.API.csproj"
+  PATH_TO_CSPROJ_PERSISTENCE: "./projects/expense-tracker/src/CabaVS.ExpenseTracker.API/CabaVS.ExpenseTracker.API.csproj"
   PATH_TO_GLOBAL_JSON: "./global.json"
 
 jobs:
@@ -34,10 +35,10 @@ jobs:
           global-json-file: ${{ env.PATH_TO_GLOBAL_JSON }}
 
       - name: Restore
-        run: dotnet restore ${{ env.PATH_TO_API }}
+        run: dotnet restore ${{ env.PATH_TO_CSPROJ_API }}
 
       - name: Build
-        run: dotnet build ${{ env.PATH_TO_API }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+        run: dotnet build ${{ env.PATH_TO_CSPROJ_API }} --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
         
   db-script:
     name: Generate EF migrations script
@@ -50,10 +51,17 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: ${{ env.PATH_TO_GLOBAL_JSON }}
+          
+      - name: Install required NuGet to API project
+        run: dotnet add ${{ env.PATH_TO_CSPROJ_API }} package "Microsoft.EntityFrameworkCore.Design"
 
       - name: Generate EF Core idempotent script
         run: |
-          dotnet ef migrations script --idempotent -o migration.sql
+          dotnet ef migrations script \
+            --idempotent \
+            --project ${{ env.PATH_TO_CSPROJ_PERSISTENCE }} \
+            --startup-project ${{ env.PATH_TO_API }} \
+            --output migration.sql
 
       - name: Upload migration.sql as artifact
         uses: actions/upload-artifact@v4
