@@ -54,6 +54,9 @@ jobs:
           
       - name: Install required NuGet to API project
         run: dotnet add ${{ env.PATH_TO_CSPROJ_API }} package "Microsoft.EntityFrameworkCore.Design"
+        
+      - name: Install dotnet-ef tool
+        run: dotnet tool install -g dotnet-ef
 
       - name: Generate EF Core idempotent script
         run: |
