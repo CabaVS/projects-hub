@@ -10,8 +10,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "CVS_CONFIGURATION_FROM_AZURE": "false",
         "CVS_PERSISTENCE_AUTH_ENTRA_ID": "false",
-        "CVS_USER_ID": "00000001-0001-0001-0001-000000000001",
-        "OTEL_SERVICE_NAME": "aca-expensetrackerapi"
+        "CVS_USER_ID": "00000001-0001-0001-0001-000000000001"
       }
     }
   }
