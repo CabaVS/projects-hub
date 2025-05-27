@@ -1,14 +1,15 @@
 ﻿using CabaVS.ExpenseTracker.Application.Abstractions.UserContext;
+using CabaVS.ExpenseTracker.Presentation.Authentication;
 using CabaVS.ExpenseTracker.Presentation.Logging;
 using CabaVS.ExpenseTracker.Presentation.UserContext;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 
 namespace CabaVS.ExpenseTracker.Presentation;
@@ -34,12 +35,11 @@ public static class DependencyInjection
                 options.Audience = configuration["Authentication:Audience"];
                 options.Authority = configuration["Authentication:Authority"];
                 options.RequireHttpsMetadata = bool.Parse(configuration["Authentication:RequireHttpsMetadata"] ?? bool.TrueString);
-
-                options.TokenValidationParameters = new TokenValidationParameters { RoleClaimType = "realm_access.roles" };
             });
         services.AddAuthorization();
-        
-        services.AddScoped<ICurrentUserAccessor, DummyCurrentUserAccessor>();
+
+        services.AddScoped<IClaimsTransformation, KeycloakRoleClaimsTransformer>();
+        services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
         
         services.AddFastEndpoints();
         
