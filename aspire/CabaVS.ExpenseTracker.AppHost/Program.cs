@@ -15,8 +15,7 @@ IResourceBuilder<KeycloakResource> keycloak = builder.AddKeycloak("aca-keycloak"
     .WithEnvironment("KC_DB_URL", GetJdbcUrl(sql, dbKeycloak))
     .WithEnvironment("KC_DB_USERNAME", builder.Configuration["Parameters:sql-cabavsprojectshub-username"])
     .WithEnvironment("KC_DB_PASSWORD", builder.Configuration["Parameters:sql-cabavsprojectshub-password"])
-    .WithReference(dbKeycloak).WaitFor(dbKeycloak)
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithReference(dbKeycloak).WaitFor(dbKeycloak);
 
 // Expense Tracker API
 builder.AddProject<Projects.CabaVS_ExpenseTracker_API>("aca-expensetrackerapi")
