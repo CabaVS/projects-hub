@@ -22,7 +22,6 @@ internal sealed class GetWorkspaceByIdEndpoint(ISender sender)
 {
     public override void Configure()
     {
-        AllowAnonymous();
         Get("/api/workspaces/{workspaceId:guid}");
         Options(x =>
         {
