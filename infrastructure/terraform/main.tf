@@ -64,3 +64,15 @@ module "project_expensetracker" {
   blob_container_scope                   = "${data.azurerm_storage_account.existing.id}/blobServices/default/containers/${var.container_name_for_app_configs}"
   application_insights_connection_string = module.shared.application_insights_connection_string
 }
+
+# Modules: Project for Keycloak
+module "project_keycloak" {
+  source = "./project-keycloak"
+
+  resource_group_name          = var.resource_group_name
+  location                     = data.azurerm_resource_group.existing.location
+  sql_server_id                = module.shared.sql_server_id
+  sql_server_fqdn              = module.shared.sql_server_fqdn
+  container_app_environment_id = module.shared.ace_id
+  acr_login_server             = module.shared.acr_login_server
+}

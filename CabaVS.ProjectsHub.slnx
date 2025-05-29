@@ -9,10 +9,12 @@
   <Folder Name="/.solution/Docker/">
     <File Path=".dockerignore" />
     <File Path="proj.expensetrackerapi.Dockerfile" />
+    <File Path="proj.keycloak.Dockerfile" />
   </Folder>
   <Folder Name="/.solution/GitHub Actions/">
     <File Path=".github\workflows\infrastructure.yml" />
     <File Path=".github\workflows\proj-expensetracker.yml" />
+    <File Path=".github\workflows\proj-keycloak.yml" />
   </Folder>
   <Folder Name="/aspire/">
     <Project Path="aspire\CabaVS.ExpenseTracker.AppHost\CabaVS.ExpenseTracker.AppHost.csproj" Type="Classic C#" />
@@ -33,6 +35,11 @@
     <File Path="infrastructure\terraform\project-expensetracker\main.tf" />
     <File Path="infrastructure\terraform\project-expensetracker\outputs.tf" />
     <File Path="infrastructure\terraform\project-expensetracker\variables.tf" />
+  </Folder>
+  <Folder Name="/infrastructure/terraform/project-keycloak/">
+    <File Path="infrastructure\terraform\project-keycloak\main.tf" />
+    <File Path="infrastructure\terraform\project-keycloak\outputs.tf" />
+    <File Path="infrastructure\terraform\project-keycloak\variables.tf" />
   </Folder>
   <Folder Name="/infrastructure/terraform/shared/">
     <File Path="infrastructure\terraform\shared\main.tf" />
