@@ -23,13 +23,24 @@ resource "azurerm_container_app" "aca_keycloak" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      template[0].container[0].image
+    ]
+  }
+
+  registry {
+    server   = var.acr_login_server
+    identity = azurerm_user_assigned_identity.uami_aca_keycloak.id
+  }
+
   template {
     min_replicas = 0
     max_replicas = 1
 
     container {
       name   = "keycloak"
-      image  = "${var.acr_login_server}/keycloak:latest"
+      image  = "mcr.microsoft.com/dotnet/samples:aspnetapp"
       cpu    = 0.5
       memory = "1Gi"
 
