@@ -75,4 +75,5 @@ module "project_keycloak" {
   sql_server_fqdn              = module.shared.sql_server_fqdn
   container_app_environment_id = module.shared.ace_id
   acr_login_server             = module.shared.acr_login_server
+  acr_id                       = module.shared.acr_id
 }

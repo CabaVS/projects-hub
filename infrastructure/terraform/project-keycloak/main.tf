@@ -23,12 +23,6 @@ resource "azurerm_container_app" "aca_keycloak" {
     }
   }
 
-  lifecycle {
-    ignore_changes = [
-      template[0].container[0].image
-    ]
-  }
-
   registry {
     server   = var.acr_login_server
     identity = azurerm_user_assigned_identity.uami_aca_keycloak.id
@@ -40,7 +34,7 @@ resource "azurerm_container_app" "aca_keycloak" {
 
     container {
       name   = "keycloak"
-      image  = "mcr.microsoft.com/dotnet/samples:aspnetapp"
+      image  = "${var.acr_login_server}/keycloak:latest"
       cpu    = 0.5
       memory = "1Gi"
 
@@ -114,4 +108,11 @@ resource "azurerm_user_assigned_identity" "uami_aca_keycloak" {
   name                = "uami-aca-keycloak"
   location            = var.location
   resource_group_name = var.resource_group_name
+}
+
+# Role assignments
+resource "azurerm_role_assignment" "acr_pull_for_aca_expensetrackerapi" {
+  scope                = var.acr_id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_user_assigned_identity.uami_aca_keycloak.principal_id
 }
