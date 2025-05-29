@@ -39,9 +39,9 @@ resource "azurerm_container_app" "aca_keycloak" {
         "--optimized",
         "--http-port=8080"
       ]
-      
+
       env {
-        name = "AZURE_CLIENT_ID"
+        name  = "AZURE_CLIENT_ID"
         value = azurerm_user_assigned_identity.uami_aca_keycloak.principal_id
       }
 
