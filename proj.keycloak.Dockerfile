@@ -6,12 +6,13 @@ ENV KC_DB=mssql
 
 # Download MSAL4J JAR for Entra Id authentication
 ADD https://repo1.maven.org/maven2/com/microsoft/azure/msal4j/1.13.3/msal4j-1.13.3.jar /tmp/msal4j-1.13.3.jar
+ADD https://repo1.maven.org/maven2/com/nimbusds/oauth2-oidc-sdk/9.37.3/oauth2-oidc-sdk-9.37.3.jar /tmp/oauth2-oidc-sdk-9.37.3.jar
 
-# Copy JAR into the final Keycloak directory via root-writable temp path
+# Switch to root to install custom JARs
 USER root
-RUN mkdir -p /opt/keycloak/providers \
-    && cp /tmp/msal4j-1.13.3.jar /opt/keycloak/providers/ \
-    && chmod 644 /opt/keycloak/providers/msal4j-1.13.3.jar
+RUN mkdir -p /opt/keycloak/providers && \
+    cp /tmp/*.jar /opt/keycloak/providers/ && \
+    chmod 644 /opt/keycloak/providers/*.jar
 
 # Switch back to keycloak user for build
 USER 1000
