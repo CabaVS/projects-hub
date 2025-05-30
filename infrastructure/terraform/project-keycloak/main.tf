@@ -46,11 +46,6 @@ resource "azurerm_container_app" "aca_keycloak" {
       ]
 
       env {
-        name  = "AZURE_CLIENT_ID"
-        value = azurerm_user_assigned_identity.uami_aca_keycloak.client_id
-      }
-
-      env {
         name  = "KC_DB"
         value = "mssql"
       }
