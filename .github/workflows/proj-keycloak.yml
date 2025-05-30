@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/proj-keycloak.yml'
       - 'proj.keycloak.Dockerfile'
+      - 'pom.xml'
 
 env:
   DOCKER_IMAGE_NAME: "keycloak"
