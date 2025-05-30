@@ -1,18 +1,26 @@
-# Stage 1: Build optimized Keycloak distribution
+# Stage 1: Build the fat JAR using Maven
+FROM maven:3.9.6-eclipse-temurin-17 AS msal-builder
+
+WORKDIR /app
+
+# Copy Maven config and dependencies
+COPY pom.xml .
+
+# Let Maven resolve dependencies and cache
+RUN mvn dependency:go-offline
+
+# Package fat jar (shaded)
+RUN mvn package -DskipTests
+
+# Stage 2: Build Keycloak with MSAL4J support
 FROM quay.io/keycloak/keycloak:26.2.5 AS builder
 
 # Set DB vendor to prevent interactive build
 ENV KC_DB=mssql
 
-# Download MSAL4J JAR for Entra Id authentication
-ADD https://repo1.maven.org/maven2/com/microsoft/azure/msal4j/1.13.3/msal4j-1.13.3.jar /tmp/msal4j-1.13.3.jar
-ADD https://repo1.maven.org/maven2/com/nimbusds/oauth2-oidc-sdk/9.37.3/oauth2-oidc-sdk-9.37.3.jar /tmp/oauth2-oidc-sdk-9.37.3.jar
-
 # Switch to root to install custom JARs
 USER root
-RUN mkdir -p /opt/keycloak/providers && \
-    cp /tmp/*.jar /opt/keycloak/providers/ && \
-    chmod 644 /opt/keycloak/providers/*.jar
+COPY --from=msal-builder /app/target/keycloak-msal4j.jar /opt/keycloak/providers/
 
 # Switch back to keycloak user for build
 USER 1000
@@ -20,7 +28,7 @@ USER 1000
 # Build the Keycloak server (avoids needing --optimized at runtime)
 RUN /opt/keycloak/bin/kc.sh build
 
-# Stage 2: Final runtime image
+# Stage 3: Final runtime image
 FROM quay.io/keycloak/keycloak:26.2.5
 
 # Copy optimized Keycloak from builder
