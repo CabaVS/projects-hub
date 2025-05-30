@@ -47,7 +47,7 @@ resource "azurerm_container_app" "aca_keycloak" {
 
       env {
         name  = "AZURE_CLIENT_ID"
-        value = azurerm_user_assigned_identity.uami_aca_keycloak.principal_id
+        value = azurerm_user_assigned_identity.uami_aca_keycloak.client_id
       }
 
       env {
@@ -57,7 +57,7 @@ resource "azurerm_container_app" "aca_keycloak" {
 
       env {
         name  = "KC_DB_URL"
-        value = "jdbc:sqlserver://${var.sql_server_fqdn}:1433;databaseName=${azurerm_mssql_database.db_keycloak.name};encrypt=true;authentication=ActiveDirectoryManagedIdentity"
+        value = "jdbc:sqlserver://${var.sql_server_fqdn}:1433;databaseName=${azurerm_mssql_database.db_keycloak.name};encrypt=true;authentication=ActiveDirectoryManagedIdentity;user=${azurerm_user_assigned_identity.uami_aca_keycloak.client_id}"
       }
 
       env {

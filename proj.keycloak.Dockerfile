@@ -4,7 +4,7 @@ FROM maven:3.9.6-eclipse-temurin-17 AS msal-builder
 WORKDIR /app
 
 # Copy Maven config and dependencies
-COPY pom.xml .
+COPY projects/keycloak/pom.xml .
 
 # Let Maven resolve dependencies and cache
 RUN mvn dependency:go-offline

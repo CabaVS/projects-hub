@@ -56,4 +56,7 @@
     <Project Path="projects\expense-tracker\src\CabaVS.ExpenseTracker.Presentation\CabaVS.ExpenseTracker.Presentation.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/proj-expensetracker/tests/" />
+  <Folder Name="/proj-keycloak/">
+    <File Path="projects\keycloak\pom.xml" />
+  </Folder>
 </Solution>
