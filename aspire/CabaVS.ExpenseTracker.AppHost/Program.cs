@@ -1,5 +1,9 @@
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
+// Parameters
+IResourceBuilder<ParameterResource> sqlUsername = builder.AddParameter("sql-cabavsprojectshub-username", true);
+IResourceBuilder<ParameterResource> sqlPassword = builder.AddParameter("sql-cabavsprojectshub-password", true);
+
 // SQL Server
 IResourceBuilder<SqlServerServerResource> sql = builder.AddSqlServer("sql-cabavsprojectshub", port: 1433)
     .WithDataVolume()
@@ -13,8 +17,8 @@ IResourceBuilder<SqlServerDatabaseResource> dbExpenseTracker = sql.AddDatabase("
 IResourceBuilder<KeycloakResource> keycloak = builder.AddKeycloak("aca-keycloak", 4800)
     .WithEnvironment("KC_DB", "mssql")
     .WithEnvironment("KC_DB_URL", GetJdbcUrl(sql, dbKeycloak))
-    .WithEnvironment("KC_DB_USERNAME", builder.Configuration["Parameters:sql-cabavsprojectshub-username"])
-    .WithEnvironment("KC_DB_PASSWORD", builder.Configuration["Parameters:sql-cabavsprojectshub-password"])
+    .WithEnvironment("KC_DB_USERNAME", sqlUsername)
+    .WithEnvironment("KC_DB_PASSWORD", sqlPassword)
     .WithReference(dbKeycloak).WaitFor(dbKeycloak);
 
 // Expense Tracker API
