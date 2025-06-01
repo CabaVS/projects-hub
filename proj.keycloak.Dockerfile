@@ -51,4 +51,4 @@ RUN chmod +x /opt/keycloak/bootstrap-and-start.sh
 USER 1000
 
 # Run Keycloak optimized
-CMD [ "start", "--optimized", "--http-port=8080", "--bootstrap-admin-username=${KC_BOOTSTRAP_ADMIN_USERNAME}", "--bootstrap-admin-password=${KC_BOOTSTRAP_ADMIN_PASSWORD}" ]
+CMD [ "start", "--http-port=8080", "--bootstrap-admin-username=${KC_BOOTSTRAP_ADMIN_USERNAME}", "--bootstrap-admin-password=${KC_BOOTSTRAP_ADMIN_PASSWORD}" ]
