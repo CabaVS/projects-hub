@@ -30,14 +30,12 @@ FROM quay.io/keycloak/keycloak:26.2.5 AS builder
 # Set DB vendor to prevent interactive build
 ENV KC_DB=mssql
 
-# Switch to root to install custom JARs
+# Switch to root user and Install custom JARs
 USER root
 COPY --from=msal-builder /app/target/clean-msal4j.jar /opt/keycloak/providers/msal4j.jar
-
-# Switch back to keycloak user for build
 USER 1000
 
-# Build the Keycloak server (avoids needing --optimized at runtime)
+# Build the Keycloak server
 RUN /opt/keycloak/bin/kc.sh build
 
 # Stage 3: Final runtime image
@@ -46,5 +44,11 @@ FROM quay.io/keycloak/keycloak:26.2.5
 # Copy optimized Keycloak from builder
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 
-# Expose port and default to start in optimized mode
-CMD [ "start", "--optimized", "--http-port=8080" ]
+# Switch to root user and Copy a custom startup script
+USER root
+COPY projects/keycloak/bootstrap-and-start.sh /opt/keycloak/bootstrap-and-start.sh
+RUN chmod +x /opt/keycloak/bootstrap-and-start.sh
+USER 1000
+
+# Run custom startup script
+CMD ["/opt/keycloak/bootstrap-and-start.sh"]
