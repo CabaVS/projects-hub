@@ -78,28 +78,6 @@ az storage container create `
   --account-key $accountKey `
   --public-access off
 
-# Create SQL Admins group
-Write-Host "Creating SQL Admins group: $sqlAdminsGroupName..."
-az ad group create `
-  --display-name $sqlAdminsGroupName `
-  --mail-nickname $sqlAdminsGroupName
-
-if ($LASTEXITCODE -ne 0) {
-  Write-Host "Failed to create Azure AD group." -ForegroundColor Red
-  exit 1
-}
-else {
-  Write-Host "Azure AD group created."
-}
-
-# Retrieve group details
-$group = az ad group show --group $sqlAdminsGroupName | ConvertFrom-Json
-
-Write-Host "Group details ready:"
-Write-Host "TF_VAR_sql_admin_group_display_name  = $($group.displayName)"
-Write-Host "TF_VAR_sql_admin_group_object_id     = $($group.id)"
-Write-Host "TF_VAR_sql_admin_group_tenant_id     = $tenantId"
-
 # Create SP for GitHub OIDC login
 Write-Host "Creating Azure AD App for GitHub OIDC..."
 $app = az ad app create --display-name $githubAppName | ConvertFrom-Json
