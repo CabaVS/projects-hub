@@ -1,6 +1,4 @@
-﻿using Azure.Core;
-using Azure.Identity;
-using CabaVS.ExpenseTracker.Application.Abstractions.Persistence;
+﻿using CabaVS.ExpenseTracker.Application.Abstractions.Persistence;
 using CabaVS.ExpenseTracker.Application.Abstractions.Persistence.ReadRepositories;
 using CabaVS.ExpenseTracker.Persistence.ReadRepositories;
 using Microsoft.Data.SqlClient;
@@ -17,18 +15,7 @@ public static class DependencyInjection
         services.AddTransient(_ =>
         {
             var connectionString = configuration.GetConnectionString("SqlDatabase");
-            
-            var useEntraId = bool.Parse(configuration["CVS_PERSISTENCE_AUTH_ENTRA_ID"] ?? bool.FalseString);
-            if (!useEntraId)
-            {
-                return new SqlConnection(connectionString);
-            }
-
-            var tokenRequest = new TokenRequestContext(["https://database.windows.net/.default"]);
-            var token = new DefaultAzureCredential().GetToken(tokenRequest).Token;
-                
-            return new SqlConnection(connectionString) { AccessToken = token };
-
+            return new SqlConnection(connectionString);
         });
         
         services.AddDbContext<ApplicationDbContext>(

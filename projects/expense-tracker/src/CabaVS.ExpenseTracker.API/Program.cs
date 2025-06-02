@@ -8,11 +8,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 var isDevelopment = builder.Environment.IsDevelopment();
 
-var loadAzureConfiguration = bool.Parse(Environment.GetEnvironmentVariable("CVS_CONFIGURATION_FROM_AZURE") ?? bool.FalseString);
-if (loadAzureConfiguration)
-{
-    builder.Configuration.AddJsonStream(AzureBlobJsonConfigurationProvider.JsonStream());
-}
+builder.Configuration.AddJsonStreamFromBlob();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(isDevelopment);

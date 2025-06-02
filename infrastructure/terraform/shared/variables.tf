@@ -8,17 +8,12 @@ variable "location" {
   description = "Azure region for the resources"
 }
 
-variable "sql_admin_group_display_name" {
+variable "sql_admin_login" {
   type        = string
-  description = "AAD group display name for SQL Admin"
+  description = "Login for SQL Admin"
 }
 
-variable "sql_admin_group_object_id" {
+variable "sql_admin_password" {
   type        = string
-  description = "AAD group object ID for SQL Admin"
-}
-
-variable "sql_admin_group_tenant_id" {
-  type        = string
-  description = "AAD tenant ID for SQL Admin"
+  description = "Password for SQL Admin"
 }

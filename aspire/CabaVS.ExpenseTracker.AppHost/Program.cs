@@ -5,7 +5,7 @@ IResourceBuilder<ParameterResource> sqlUsername = builder.AddParameter("sql-caba
 IResourceBuilder<ParameterResource> sqlPassword = builder.AddParameter("sql-cabavsprojectshub-password", true);
 
 // SQL Server
-IResourceBuilder<SqlServerServerResource> sql = builder.AddSqlServer("sql-cabavsprojectshub", port: 1433)
+IResourceBuilder<SqlServerServerResource> sql = builder.AddSqlServer("sql-cabavsprojectshub", sqlPassword, port: 1433)
     .WithDataVolume()
     .WithLifetime(ContainerLifetime.Persistent);
 

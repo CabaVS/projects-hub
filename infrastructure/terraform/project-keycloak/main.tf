@@ -5,11 +5,6 @@ resource "azurerm_container_app" "aca_keycloak" {
   resource_group_name          = var.resource_group_name
   revision_mode                = "Single"
 
-  identity {
-    type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.uami_aca_keycloak.id]
-  }
-
   ingress {
     allow_insecure_connections = false
     external_enabled           = true
@@ -23,25 +18,19 @@ resource "azurerm_container_app" "aca_keycloak" {
     }
   }
 
-  registry {
-    server   = var.acr_login_server
-    identity = azurerm_user_assigned_identity.uami_aca_keycloak.id
-  }
-
   template {
     min_replicas = 0
     max_replicas = 1
 
     container {
       name   = "keycloak"
-      image  = "${var.acr_login_server}/keycloak:latest"
+      image  = "quay.io/keycloak/keycloak:26.2.5"
       cpu    = 0.5
       memory = "1Gi"
 
       command = [
         "/opt/keycloak/bin/kc.sh",
         "start",
-        "--optimized",
         "--http-port=8080"
       ]
 
@@ -52,7 +41,17 @@ resource "azurerm_container_app" "aca_keycloak" {
 
       env {
         name  = "KC_DB_URL"
-        value = "jdbc:sqlserver://${var.sql_server_fqdn}:1433;databaseName=${azurerm_mssql_database.db_keycloak.name};encrypt=true;authentication=ActiveDirectoryManagedIdentity;user=${azurerm_user_assigned_identity.uami_aca_keycloak.client_id}"
+        value = "jdbc:sqlserver://${var.sql_server_fqdn}:1433;databaseName=${azurerm_mssql_database.db_keycloak.name};encrypt=true;trustServerCertificate=false;loginTimeout=60"
+      }
+
+      env {
+        name  = "KC_DB_USERNAME"
+        value = var.sql_username
+      }
+
+      env {
+        name  = "KC_DB_PASSWORD"
+        value = var.sql_password
       }
 
       env {
@@ -73,6 +72,16 @@ resource "azurerm_container_app" "aca_keycloak" {
       env {
         name  = "KC_PROXY"
         value = "edge"
+      }
+
+      env {
+        name  = "KEYCLOAK_ADMIN"
+        value = var.keycloak_login
+      }
+
+      env {
+        name  = "KEYCLOAK_ADMIN_PASSWORD"
+        value = var.keycloak_password
       }
     }
   }
@@ -96,18 +105,4 @@ resource "azurerm_mssql_database" "db_keycloak" {
   lifecycle {
     prevent_destroy = true
   }
-}
-
-# User-Assigned Managed Identity
-resource "azurerm_user_assigned_identity" "uami_aca_keycloak" {
-  name                = "uami-aca-keycloak"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-}
-
-# Role assignments
-resource "azurerm_role_assignment" "acr_pull_for_aca_expensetrackerapi" {
-  scope                = var.acr_id
-  role_definition_name = "AcrPull"
-  principal_id         = azurerm_user_assigned_identity.uami_aca_keycloak.principal_id
 }

@@ -20,9 +20,12 @@ provider "azurerm" {
 variable "resource_group_name" {}
 variable "storage_account_name" {}
 variable "subscription_id" {}
-variable "sql_admin_group_display_name" {}
-variable "sql_admin_group_object_id" {}
-variable "sql_admin_group_tenant_id" {}
+variable "sql_admin_login" {}
+variable "sql_admin_password" {}
+variable "keycloak_db_username" {}
+variable "keycloak_db_password" {}
+variable "keycloak_admin_login" {}
+variable "keycloak_admin_password" {}
 
 variable "container_name_for_app_configs" {
   type    = string
@@ -44,11 +47,10 @@ data "azurerm_storage_account" "existing" {
 module "shared" {
   source = "./shared"
 
-  resource_group_name          = var.resource_group_name
-  location                     = data.azurerm_resource_group.existing.location
-  sql_admin_group_display_name = var.sql_admin_group_display_name
-  sql_admin_group_object_id    = var.sql_admin_group_object_id
-  sql_admin_group_tenant_id    = var.sql_admin_group_tenant_id
+  resource_group_name = var.resource_group_name
+  location            = data.azurerm_resource_group.existing.location
+  sql_admin_login     = var.sql_admin_login
+  sql_admin_password  = var.sql_admin_password
 }
 
 # Modules: Project for Expense Tracker
@@ -70,10 +72,11 @@ module "project_keycloak" {
   source = "./project-keycloak"
 
   resource_group_name          = var.resource_group_name
-  location                     = data.azurerm_resource_group.existing.location
   sql_server_id                = module.shared.sql_server_id
   sql_server_fqdn              = module.shared.sql_server_fqdn
+  sql_username                 = var.keycloak_db_username
+  sql_password                 = var.keycloak_db_password
+  keycloak_login               = var.keycloak_admin_login
+  keycloak_password            = var.keycloak_admin_password
   container_app_environment_id = module.shared.ace_id
-  acr_login_server             = module.shared.acr_login_server
-  acr_id                       = module.shared.acr_id
 }
