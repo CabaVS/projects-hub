@@ -22,6 +22,7 @@ variable "storage_account_name" {}
 variable "subscription_id" {}
 variable "sql_admin_login" {}
 variable "sql_admin_password" {}
+variable "keycloak_hostname" {}
 variable "keycloak_db_username" {}
 variable "keycloak_db_password" {}
 variable "keycloak_admin_login" {}
@@ -79,4 +80,5 @@ module "project_keycloak" {
   keycloak_login               = var.keycloak_admin_login
   keycloak_password            = var.keycloak_admin_password
   container_app_environment_id = module.shared.ace_id
+  container_app_hostname       = var.keycloak_hostname
 }

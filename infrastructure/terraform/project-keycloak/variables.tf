@@ -37,3 +37,8 @@ variable "container_app_environment_id" {
   type        = string
   description = "ID of the Container App Environment"
 }
+
+variable "container_app_hostname" {
+  type        = string
+  description = "ACA hostname (required by Keycloak admin console). Warning: unknown till creation (use static custom domain when possible)."
+}

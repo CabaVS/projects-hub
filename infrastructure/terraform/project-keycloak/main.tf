@@ -65,8 +65,8 @@ resource "azurerm_container_app" "aca_keycloak" {
       }
 
       env {
-        name  = "KC_HOSTNAME_STRICT"
-        value = "false"
+        name  = "KC_HOSTNAME"
+        value = var.container_app_hostname
       }
 
       env {
