@@ -7,9 +7,7 @@
       "launchBrowser": false,
       "applicationUrl": "https://localhost:4790",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "CVS_CONFIGURATION_FROM_AZURE": "false",
-        "CVS_PERSISTENCE_AUTH_ENTRA_ID": "false"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }
