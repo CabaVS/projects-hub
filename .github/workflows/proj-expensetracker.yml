@@ -12,6 +12,10 @@ on:
       - 'global.json'
       - 'proj.expensetrackerapi.Dockerfile'
       - 'projects/expense-tracker/**'
+        
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 
 env:
   BUILD_CONFIGURATION: "Release"
