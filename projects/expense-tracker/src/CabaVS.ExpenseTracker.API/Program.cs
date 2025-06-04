@@ -8,7 +8,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 var isDevelopment = builder.Environment.IsDevelopment();
 
-builder.Configuration.AddJsonStreamFromBlob();
+builder.Configuration.AddJsonStreamFromBlob(isDevelopment);
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(isDevelopment);
