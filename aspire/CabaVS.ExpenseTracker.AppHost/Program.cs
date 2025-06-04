@@ -39,7 +39,7 @@ IResourceBuilder<KeycloakResource> keycloak = builder.AddKeycloak("aca-keycloak"
 
 // Expense Tracker API
 builder.AddProject<Projects.CabaVS_ExpenseTracker_API>("aca-expensetrackerapi")
-    .WithEnvironment("CVS_CONFIGURATION_FROM_AZURE_URL", "http://127.0.0.1:27000/devstoreaccount1/app-configs/proj-expensetracker.json")
+    .WithEnvironment("CVS_CONFIGURATION_FROM_AZURE_URL", "http://127.0.0.1:27000/devstoreaccount1/app-configs/proj-expensetracker.local.json")
     .WithReference(blobsResource).WaitFor(blobsResource)
     .WithReference(dbExpenseTracker, "SqlDatabase").WaitFor(dbExpenseTracker)
     .WithReference(keycloak).WaitFor(keycloak);
