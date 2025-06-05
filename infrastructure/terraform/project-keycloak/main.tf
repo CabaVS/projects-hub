@@ -44,12 +44,6 @@ resource "azurerm_container_app" "aca_keycloak" {
       cpu    = 0.5
       memory = "1Gi"
 
-      command = [
-        "/opt/keycloak/bin/kc.sh",
-        "start",
-        "--http-port=8080"
-      ]
-
       env {
         name  = "KC_DB"
         value = "mssql"
