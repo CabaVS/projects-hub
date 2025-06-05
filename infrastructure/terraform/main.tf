@@ -73,6 +73,9 @@ module "project_keycloak" {
   source = "./project-keycloak"
 
   resource_group_name          = var.resource_group_name
+  location                     = data.azurerm_resource_group.existing.location
+  acr_id                       = module.shared.acr_id
+  acr_login_server             = module.shared.acr_login_server
   sql_server_id                = module.shared.sql_server_id
   sql_server_fqdn              = module.shared.sql_server_fqdn
   sql_username                 = var.keycloak_db_username

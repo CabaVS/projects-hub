@@ -3,6 +3,21 @@ variable "resource_group_name" {
   description = "Resource group where the ACA is deployed"
 }
 
+variable "location" {
+  type        = string
+  description = "Azure region"
+}
+
+variable "acr_id" {
+  type        = string
+  description = "Resource ID of the ACR (used for role assignment)"
+}
+
+variable "acr_login_server" {
+  type        = string
+  description = "Login server URL for the Azure Container Registry"
+}
+
 variable "sql_server_id" {
   type        = string
   description = "ID of the SQL Server"

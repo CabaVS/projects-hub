@@ -9,10 +9,12 @@
   <Folder Name="/.solution/Docker/">
     <File Path=".dockerignore" />
     <File Path="proj.expensetrackerapi.Dockerfile" />
+    <File Path="proj.keycloak.Dockerfile" />
   </Folder>
   <Folder Name="/.solution/GitHub Actions/">
     <File Path=".github\workflows\infrastructure.yml" />
     <File Path=".github\workflows\proj-expensetracker.yml" />
+    <File Path=".github\workflows\proj-keycloak.yml" />
   </Folder>
   <Folder Name="/aspire/">
     <Project Path="aspire\CabaVS.ExpenseTracker.AppHost\CabaVS.ExpenseTracker.AppHost.csproj" Type="Classic C#" />

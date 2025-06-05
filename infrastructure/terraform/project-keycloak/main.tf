@@ -5,6 +5,11 @@ resource "azurerm_container_app" "aca_keycloak" {
   resource_group_name          = var.resource_group_name
   revision_mode                = "Single"
 
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.uami_aca_keycloak.id]
+  }
+
   ingress {
     allow_insecure_connections = false
     external_enabled           = true
@@ -18,13 +23,24 @@ resource "azurerm_container_app" "aca_keycloak" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      template[0].container[0].image
+    ]
+  }
+
+  registry {
+    server   = var.acr_login_server
+    identity = azurerm_user_assigned_identity.uami_aca_keycloak.id
+  }
+
   template {
     min_replicas = 0
     max_replicas = 1
 
     container {
       name   = "keycloak"
-      image  = "quay.io/keycloak/keycloak:26.2.5"
+      image  = "${var.acr_login_server}/keycloak:latest"
       cpu    = 0.5
       memory = "1Gi"
 
@@ -105,4 +121,18 @@ resource "azurerm_mssql_database" "db_keycloak" {
   lifecycle {
     prevent_destroy = true
   }
+}
+
+# User-Assigned Managed IdentityAdd commentMore actions
+resource "azurerm_user_assigned_identity" "uami_aca_keycloak" {
+  name                = "uami-aca-keycloak"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}
+
+# Role assignments
+resource "azurerm_role_assignment" "acr_pull_for_aca_keycloak" {
+  scope                = var.acr_id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_user_assigned_identity.uami_aca_keycloak.principal_id
 }
