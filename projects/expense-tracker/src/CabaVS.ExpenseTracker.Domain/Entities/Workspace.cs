@@ -26,9 +26,8 @@ public sealed class Workspace : Entity
         WorkspaceName.Create(name)
             .Map(x => new Workspace(id, x, [.. members]));
 
-    public Result Rename(string name, User author) =>
+    public Result Rename(string name) =>
         Result.Success()
-            .Ensure(() => _members.Exists(wm => wm.User == author && wm.IsAdmin), WorkspaceErrors.AdminPermissionsRequired())
             .Bind(() => WorkspaceName.Create(name))
             .Tap(x => Name = x);
 
