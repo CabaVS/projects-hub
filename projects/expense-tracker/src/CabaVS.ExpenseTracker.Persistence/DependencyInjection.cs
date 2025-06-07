@@ -33,6 +33,7 @@ public static class DependencyInjection
         services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
 
         services.AddSingleton<IWorkspaceReadRepository, WorkspaceReadRepository>();
+        services.AddSingleton<ICurrencyReadRepository, CurrencyReadRepository>();
         
         return services;
     }

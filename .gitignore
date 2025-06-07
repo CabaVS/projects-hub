@@ -2,6 +2,9 @@
 bin/
 obj/
 
+# EF Core migrations
+*.sql
+
 # Docker
 .env
 

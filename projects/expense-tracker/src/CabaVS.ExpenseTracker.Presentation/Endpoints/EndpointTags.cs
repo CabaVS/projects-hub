@@ -3,4 +3,5 @@
 internal static class EndpointTags
 {
     public const string Workspaces = "Workspaces";
+    public const string Currencies = "Currencies";
 }

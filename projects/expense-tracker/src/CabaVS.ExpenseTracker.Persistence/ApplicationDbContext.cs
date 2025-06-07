@@ -10,6 +10,8 @@ internal sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext
     
     public DbSet<WorkspaceEfEntity> Workspaces { get; set; }
     public DbSet<WorkspaceMemberEfEntity> WorkspaceMembers { get; set; }
+
+    public DbSet<CurrencyEfEntity> Currencies { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.ApplyConfigurationsFromAssembly(AssemblyMarker.Assembly);
