@@ -12,65 +12,69 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CabaVS.ExpenseTracker.Presentation.Endpoints.Currencies;
 
-internal sealed class GetAllCurrenciesEndpoint(ISender sender)
-    : EndpointWithoutRequest<
+internal sealed class GetCurrencyByIdEndpoint(ISender sender)
+    : Endpoint<
+        GetCurrencyByIdEndpoint.RequestModel,
         Results<
-            Ok<GetAllCurrenciesEndpoint.ResponseModel>,
-            BadRequest<Error>>>
+            Ok<GetCurrencyByIdEndpoint.ResponseModel>,
+            BadRequest<Error>,
+            NotFound<NotFoundError>>>
 {
     public override void Configure()
     {
-        Get("/api/currencies");
+        Get("/api/currencies/{currencyId:guid}");
         Options(x =>
         {
-            x.WithName(nameof(GetAllCurrenciesEndpoint));
+            x.WithName(nameof(GetCurrencyByIdEndpoint));
             x.WithTags(EndpointTags.Currencies);
         });
     }
 
-    public override async Task<Results<Ok<ResponseModel>, BadRequest<Error>>> ExecuteAsync(CancellationToken ct)
+    public override async Task<Results<Ok<ResponseModel>, BadRequest<Error>, NotFound<NotFoundError>>> ExecuteAsync(RequestModel req,
+        CancellationToken ct)
     {
-        var query = new GetAllCurrenciesQuery();
+        var query = new GetCurrencyByIdQuery(req.CurrencyId);
         
-        Result<CurrencyModel[]> result = await sender.Send(query, ct);
-        
-        return result.ToDefaultApiResponse(currencies => new ResponseModel(currencies));
+        Result<CurrencyModel> result = await sender.Send(query, ct);
+
+        return result.ToDefaultApiResponseWithNotFound(currency => new ResponseModel(currency));
     }
 
-    internal sealed record ResponseModel(CurrencyModel[] Currencies);
+    internal sealed record RequestModel(Guid CurrencyId);
+    internal sealed record ResponseModel(CurrencyModel Currency);
     
     [SuppressMessage(
         "Major Code Smell",
         "S1144:Unused private types or members should be removed", 
         Justification = "Type used implicitly.")]
-    internal sealed class EndpointSummary : Summary<GetAllCurrenciesEndpoint>
+    internal sealed class EndpointSummary : Summary<GetCurrencyByIdEndpoint>
     {
         public EndpointSummary()
         {
-            Summary = "Get all Currencies";
-            Description = "Gets all Currencies. Sorted by Name.";
+            Summary = "Get Currency by Id";
+            Description = "Gets a Currency by Id.";
+            
+            Params[nameof(RequestModel.CurrencyId)] = "Currency Id to search by.";
 
             Response(
                 (int)HttpStatusCode.OK,
                 "OK response with body.",
                 example: new ResponseModel(
-                [
                     new CurrencyModel(
                         new Guid("00000001-0001-0001-0001-000000000001"),
                         "United States Dollar",
                         "USD",
-                        "$"),
-                    new CurrencyModel(
-                        new Guid("00000001-0001-0001-0001-000000000002"),
-                        "Euro",
-                        "EUR",
-                        "€")
-                ]));
+                        "$")));
             
             Response(
                 (int)HttpStatusCode.BadRequest,
                 "Bad Request with Error.",
                 example: new Error("Error.Unknown", "Unknown error occured."));
+            
+            Response(
+                (int)HttpStatusCode.NotFound,
+                "Not Found with Error.",
+                example: new Error("Entity.NotFound", "Entity not found."));
         }
     }
 }
