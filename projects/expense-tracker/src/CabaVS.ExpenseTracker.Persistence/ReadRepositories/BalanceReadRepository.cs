@@ -14,7 +14,7 @@ internal sealed class BalanceReadRepository(ISqlConnectionFactory sqlConnectionF
         
         const string sql =
             """
-            SELECT DISTINCT [b].[Id], [b].[Name], [b].[Amount], [c].[Id], [c].[Name], [c].[Code], [c].[Symbol], [b].[WorkspaceId]
+            SELECT DISTINCT [b].[Id], [b].[Name], [b].[Amount], [c].[Id], [c].[Name], [c].[Code], [c].[Symbol]
             	FROM [dbo].[Balances] AS [b]
             INNER JOIN [dbo].[Currencies] AS [c]
             	ON [c].[Id] = [b].[CurrencyId]
@@ -37,7 +37,7 @@ internal sealed class BalanceReadRepository(ISqlConnectionFactory sqlConnectionF
         
         const string sql =
             """
-            SELECT TOP(1) [b].[Id], [b].[Name], [b].[Amount], [c].[Id], [c].[Name], [c].[Code], [c].[Symbol], [b].[WorkspaceId]
+            SELECT TOP(1) [b].[Id], [b].[Name], [b].[Amount], [c].[Id], [c].[Name], [c].[Code], [c].[Symbol]
             	FROM [dbo].[Balances] AS [b]
             INNER JOIN [dbo].[Currencies] AS [c]
             	ON [c].[Id] = [b].[CurrencyId]
