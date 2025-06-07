@@ -30,7 +30,7 @@ internal sealed class CurrencyReadRepository(ISqlConnectionFactory sqlConnection
         
         const string sql =
             """
-            SELECT [c].[Id], [c].[Name], [c].[Code], [c].[Symbol]
+            SELECT TOP(1) [c].[Id], [c].[Name], [c].[Code], [c].[Symbol]
                 FROM [dbo].[Currencies] AS [c]
             WHERE [c].[Id] = @currencyId
             """;

@@ -34,6 +34,7 @@ public static class DependencyInjection
 
         services.AddSingleton<IWorkspaceReadRepository, WorkspaceReadRepository>();
         services.AddSingleton<ICurrencyReadRepository, CurrencyReadRepository>();
+        services.AddSingleton<IBalanceReadRepository, BalanceReadRepository>();
         
         return services;
     }

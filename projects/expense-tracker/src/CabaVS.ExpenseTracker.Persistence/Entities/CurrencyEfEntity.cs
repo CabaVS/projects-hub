@@ -2,7 +2,7 @@
 
 namespace CabaVS.ExpenseTracker.Persistence.Entities;
 
-public class CurrencyEfEntity
+internal sealed class CurrencyEfEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
