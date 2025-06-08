@@ -9,7 +9,6 @@ COPY global.json ./
 COPY *.slnx ./
 
 # Copy source
-COPY aspire/CabaVS.ExpenseTracker.ServiceDefaults/ ./aspire/CabaVS.ExpenseTracker.ServiceDefaults/
 COPY projects/expense-tracker/src/ ./projects/expense-tracker/src/
 
 # Publish (build + restore in one go)
