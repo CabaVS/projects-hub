@@ -14,13 +14,14 @@ internal sealed class BalanceEfEntity
     public Guid WorkspaceId { get; set; }
     public WorkspaceEfEntity? Workspace { get; set; }
     
-    public static BalanceEfEntity ConvertFromDomain(Balance balance) => 
+    public static BalanceEfEntity ConvertFromDomain(Guid workspaceId, Balance balance) => 
         new()
         {
             Id = balance.Id,
             Name = balance.Name.Value,
             Amount = balance.Amount,
-            CurrencyId = balance.Currency.Id
+            CurrencyId = balance.Currency.Id,
+            WorkspaceId = workspaceId
         };
 
     public Balance ConvertToDomain()

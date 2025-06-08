@@ -14,6 +14,14 @@ internal sealed class UnitOfWork(ApplicationDbContext dbContext) : IUnitOfWork
         new(() => new WorkspaceWriteRepository(dbContext));
     public IWorkspaceWriteRepository Workspaces => _workspaceWriteRepository.Value;
     
+    private readonly Lazy<ICurrencyWriteRepository> _currencyWriteRepository =
+        new(() => new CurrencyWriteRepository(dbContext));
+    public ICurrencyWriteRepository Currencies => _currencyWriteRepository.Value;
+    
+    private readonly Lazy<IBalanceWriteRepository> _balanceWriteRepository =
+        new(() => new BalanceWriteRepository(dbContext));
+    public IBalanceWriteRepository Balances => _balanceWriteRepository.Value;
+    
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default) => 
         await dbContext.SaveChangesAsync(cancellationToken);
 }

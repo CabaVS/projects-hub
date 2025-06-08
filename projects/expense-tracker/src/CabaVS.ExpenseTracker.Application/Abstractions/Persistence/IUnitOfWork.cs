@@ -8,5 +8,9 @@ public interface IUnitOfWork
     
     IWorkspaceWriteRepository Workspaces { get; }
     
+    ICurrencyWriteRepository Currencies { get; }
+    
+    IBalanceWriteRepository Balances { get; }
+    
     Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }
