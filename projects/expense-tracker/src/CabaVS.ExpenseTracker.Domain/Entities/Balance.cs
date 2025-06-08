@@ -17,6 +17,14 @@ public sealed class Balance : Entity
         Currency = currency;
     }
 
+    public Result Rename(string name) =>
+        BalanceName.Create(name)
+            .Tap(n => Name = n);
+    
+    public Result ChangeAmount(decimal amount) =>
+        Result.Success()
+            .Tap(() => Amount = amount);
+
     public static Result<Balance> CreateNew(string name, decimal amount, Currency currency) =>
         CreateExisting(Guid.NewGuid(), name, amount, currency);
 
