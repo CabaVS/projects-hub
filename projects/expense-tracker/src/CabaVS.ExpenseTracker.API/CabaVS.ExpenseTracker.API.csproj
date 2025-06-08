@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\aspire\CabaVS.ExpenseTracker.ServiceDefaults\CabaVS.ExpenseTracker.ServiceDefaults.csproj" />
       <ProjectReference Include="..\CabaVS.ExpenseTracker.Application\CabaVS.ExpenseTracker.Application.csproj" />
       <ProjectReference Include="..\CabaVS.ExpenseTracker.Infrastructure\CabaVS.ExpenseTracker.Infrastructure.csproj" />
       <ProjectReference Include="..\CabaVS.ExpenseTracker.Persistence\CabaVS.ExpenseTracker.Persistence.csproj" />

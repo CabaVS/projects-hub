@@ -8,8 +8,6 @@
     <PackageVersion Include="Aspire.Hosting.Azure.Storage" Version="9.3.0" />
     <PackageVersion Include="Aspire.Hosting.Keycloak" Version="9.3.0-preview.1.25265.20" />
     <PackageVersion Include="Aspire.Hosting.SqlServer" Version="9.3.0" />
-    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="9.5.0" />
-    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.3.0" />
     <!-- Global -->
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="10.9.0.115408" />
     <!-- Application -->

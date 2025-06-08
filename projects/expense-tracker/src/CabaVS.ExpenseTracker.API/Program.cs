@@ -1,3 +1,4 @@
+using CabaVS.ExpenseTracker.API.Health;
 using CabaVS.ExpenseTracker.API.Logging;
 using CabaVS.ExpenseTracker.Application;
 using CabaVS.ExpenseTracker.Infrastructure;
@@ -20,24 +21,16 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog();
 builder.Services.AddScoped<UserIdEnrichmentMiddleware>();
 
+builder.AddHealthChecks();
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(isDevelopment);
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddPresentation(builder.Configuration, isDevelopment);
 
-// Only for Aspire (DEV only)
-if (isDevelopment)
-{
-    builder.AddServiceDefaults();
-}
-
 WebApplication app = builder.Build();
 
-// Only for Aspire (DEV only)
-if (isDevelopment)
-{
-    app.MapDefaultEndpoints();
-}
+app.MapHealthCheckEndpoints();
 
 app.UseAuthentication();
 app.UseAuthorization();

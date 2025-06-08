@@ -18,7 +18,6 @@
   </Folder>
   <Folder Name="/aspire/">
     <Project Path="aspire\CabaVS.ExpenseTracker.AppHost\CabaVS.ExpenseTracker.AppHost.csproj" Type="Classic C#" />
-    <Project Path="aspire\CabaVS.ExpenseTracker.ServiceDefaults\CabaVS.ExpenseTracker.ServiceDefaults.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/infrastructure/" />
   <Folder Name="/infrastructure/scripts/">
