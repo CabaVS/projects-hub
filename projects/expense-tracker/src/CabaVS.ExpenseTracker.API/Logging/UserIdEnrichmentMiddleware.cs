@@ -1,8 +1,7 @@
 ﻿using CabaVS.ExpenseTracker.Application.Abstractions.UserContext;
-using Microsoft.AspNetCore.Http;
 using Serilog.Context;
 
-namespace CabaVS.ExpenseTracker.Presentation.Logging;
+namespace CabaVS.ExpenseTracker.API.Logging;
 
 internal sealed class UserIdEnrichmentMiddleware(ICurrentUserAccessor currentUserAccessor) : IMiddleware
 {

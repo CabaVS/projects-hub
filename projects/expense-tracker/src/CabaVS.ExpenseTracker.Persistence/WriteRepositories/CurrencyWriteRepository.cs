@@ -2,7 +2,6 @@
 using CabaVS.ExpenseTracker.Domain.Entities;
 using CabaVS.ExpenseTracker.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CabaVS.ExpenseTracker.Persistence.WriteRepositories;
 

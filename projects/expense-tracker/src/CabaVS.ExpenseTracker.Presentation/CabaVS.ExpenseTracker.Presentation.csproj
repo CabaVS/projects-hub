@@ -8,11 +8,6 @@
       <PackageReference Include="FastEndpoints" />
       <PackageReference Include="FastEndpoints.Swagger" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-      <PackageReference Include="Serilog" />
-      <PackageReference Include="Serilog.AspNetCore" />
-      <PackageReference Include="Serilog.Sinks.ApplicationInsights" />
-      <PackageReference Include="Serilog.Sinks.Console" />
-      <PackageReference Include="Serilog.Sinks.OpenTelemetry" />
     </ItemGroup>
 
 </Project>

@@ -16,6 +16,11 @@
       <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
       <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" />
       <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" />
+      <PackageReference Include="Serilog" />
+      <PackageReference Include="Serilog.AspNetCore" />
+      <PackageReference Include="Serilog.Sinks.ApplicationInsights" />
+      <PackageReference Include="Serilog.Sinks.Console" />
+      <PackageReference Include="Serilog.Sinks.OpenTelemetry" />
     </ItemGroup>
     
 </Project>
